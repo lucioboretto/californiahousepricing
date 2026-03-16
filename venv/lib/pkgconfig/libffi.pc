@@ -1,0 +1,11 @@
+prefix=/Users/lucioboretto/Desktop/Python Projects/california-house-pricing/venv
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+toolexeclibdir=${libdir}
+includedir=/Users/lucioboretto/Desktop/Python Projects/california-house-pricing/venv/include
+
+Name: libffi
+Description: Library supporting Foreign Function Interfaces
+Version: 3.4.4
+Libs: -L${toolexeclibdir} -lffi
+Cflags: -I${includedir}
