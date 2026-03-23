@@ -1,3 +1,95 @@
-<h1>
-    Hello World
-    <h2>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>California House Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px gray;
+        }
+
+        input {
+            margin: 5px;
+            padding: 8px;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>House Price Prediction</h1>
+
+        <input type="number" id="MedInc" placeholder="Median Income"><br>
+        <input type="number" id="HouseAge" placeholder="House Age"><br>
+        <input type="number" id="AveRooms" placeholder="Average Rooms"><br>
+        <input type="number" id="AveBedrms" placeholder="Average Bedrooms"><br>
+        <input type="number" id="Population" placeholder="Population"><br>
+        <input type="number" id="AveOccup" placeholder="Average Occupancy"><br>
+        <input type="number" id="Latitude" placeholder="Latitude"><br>
+        <input type="number" id="Longitude" placeholder="Longitude"><br>
+
+        <br><br>
+        <button onclick="predict()">Predict</button>
+
+        <h2 id="result"></h2>
+    </div>
+
+    <script>
+        function predict() {
+            const data = {
+                MedInc: parseFloat(document.getElementById("MedInc").value),
+                HouseAge: parseFloat(document.getElementById("HouseAge").value),
+                AveRooms: parseFloat(document.getElementById("AveRooms").value),
+                AveBedrms: parseFloat(document.getElementById("AveBedrms").value),
+                Population: parseFloat(document.getElementById("Population").value),
+                AveOccup: parseFloat(document.getElementById("AveOccup").value),
+                Latitude: parseFloat(document.getElementById("Latitude").value),
+                Longitude: parseFloat(document.getElementById("Longitude").value)
+            };
+
+            fetch("/predict_api", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ data: data })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    const price = (result * 100000).toFixed(0);
+                    document.getElementById("result").innerText = "Estimated Price: $" + price;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        }
+    </script>
+
+</body>
+
+</html>
